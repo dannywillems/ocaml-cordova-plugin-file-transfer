@@ -15,11 +15,6 @@ application](https://github.com/dannywillems/ocaml-cordova-plugin-file-transfer-
 This plugin allows you to upload and download files.
 
 This plugin defines global `FileTransfer`, `FileUploadOptions` constructors. Although in the global scope, they are not available until after the `deviceready` event.
-
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        console.log(FileTransfer);
-    }
 ```
 
 Source: [cordova-plugin-file-transfer](https://github.com/apache/cordova-plugin-file-transfer)
