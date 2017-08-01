@@ -51,12 +51,12 @@ val ext                 : transfer_error -> string
 type upload_options = private Ojs.t
 
 val create_upload_options :
-  ?file_key:(string [@js.default "file"])                   ->
-  ?file_name:(string [@js.default "image.jpg"])             ->
-  ?http_method:(http_method [@js.default Post])             ->
-  ?mime_type:(string [@js.default "image/jpeg"])            ->
+  ?file_key:string                                          ->
+  ?file_name:string                                         ->
+  ?http_method:http_method                                  ->
+  ?mime_type:string                                         ->
   ?params:Ojs.t                                             ->
-  ?chunked_mode:(bool [@js.default true])                   ->
+  ?chunked_mode:bool                                        ->
   ?headers:Ojs.t array                                      ->
   unit                                                      ->
   upload_options
@@ -77,7 +77,7 @@ val response_code       : upload_result -> int
 val response            : upload_result -> string
 
 (* The HTTP response headers by the server. Only iOS is supported *)
-val headers             : upload_options -> Ojs.t
+val headers             : upload_result -> Ojs.t
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
@@ -90,8 +90,8 @@ val upload :
   string                                      ->
   (upload_result -> unit)                     ->
   (transfer_error -> unit)                    ->
-  ?options:upload_options                    ->
-  ?true_all_hosts:(bool [@js.default false])  ->
+  ?options:upload_options                     ->
+  ?true_all_hosts:bool                        ->
   unit                                        ->
   unit
 [@@js.call]
@@ -112,7 +112,7 @@ val download :
   string                                                                ->
   (entry -> unit)                                                       ->
   (transfer_error -> unit)                                              ->
-  ?true_all_hosts:(bool [@js.default false])                            ->
+  ?true_all_hosts:bool                                                  ->
   (* Download options ? *)
   unit                                                                  ->
   unit
@@ -124,3 +124,13 @@ val abort :
 [@@js.call]
 
 (* -------------------------------------------------------------------------- *)
+
+(* Progress callback *)
+
+type progress_event = private Ojs.t
+
+val length_computable : progress_event -> bool
+val loaded : progress_event -> int
+val total : progress_event -> int
+
+val set_onprogress : t -> (progress_event -> unit) -> unit
