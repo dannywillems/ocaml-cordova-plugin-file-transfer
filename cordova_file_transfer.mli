@@ -77,7 +77,7 @@ val response_code       : upload_result -> int
 val response            : upload_result -> string
 
 (* The HTTP response headers by the server. Only iOS is supported *)
-val headers             : upload_options -> Ojs.t
+val headers             : upload_result -> Ojs.t
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
