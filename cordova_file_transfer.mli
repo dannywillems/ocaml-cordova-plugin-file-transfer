@@ -124,3 +124,13 @@ val abort :
 [@@js.call]
 
 (* -------------------------------------------------------------------------- *)
+
+(* Progress callback *)
+
+type progress_event = private Ojs.t
+
+val length_computable : progress_event -> bool
+val loaded : progress_event -> int
+val total : progress_event -> int
+
+val set_onprogress : t -> (progress_event -> unit) -> unit
